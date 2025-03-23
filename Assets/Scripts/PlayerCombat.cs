@@ -58,14 +58,14 @@ public class PlayerCombat : MonoBehaviour
         if (!controlsEnabled) return;
         
         // Check attack point position relative to player
-        if (attackSystem != null && debugAttackRange)
-        {
-            Transform attackPoint = attackSystem.GetAttackPoint();
-            if (attackPoint != null)
-            {
-                Debug.Log($"Player position: {transform.position}, Attack point position: {attackPoint.position}, Local offset: {attackPoint.localPosition}");
-            }
-        }
+        // if (attackSystem != null && debugAttackRange)
+        // {
+        //     Transform attackPoint = attackSystem.GetAttackPoint();
+        //     if (attackPoint != null)
+        //     {
+        //         Debug.Log($"Player position: {transform.position}, Attack point position: {attackPoint.position}, Local offset: {attackPoint.localPosition}");
+        //     }
+        // }
         
         // Basic attack
         if (Input.GetKeyDown(attackKey) && attackSystem != null)

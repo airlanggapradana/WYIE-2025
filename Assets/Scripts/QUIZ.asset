@@ -10,33 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: New Quiz Set
+  m_Name: QUIZ
   m_EditorClassIdentifier: Assembly-CSharp::QuizSet
-  quizTitle: Math
-  quizDescription: "Math\t"
+  quizTitle: QUIZ1
+  quizDescription: Desc
   questions:
-  - questionText: "Math\t"
+  - questionText: 1 + 1
     answerChoices:
     - 2
     - 1
+    - -2
     correctAnswerIndex: 0
-    difficultyMultiplier: 0
+    difficultyMultiplier: 0.2
     nextQuestionIndex: 1
-    explanationText: no
-  - questionText: Aslam
+    explanationText: Because
+  - questionText: 2+2
     answerChoices:
     - 2
     - 4
-    correctAnswerIndex: 0
-    difficultyMultiplier: 0
-    nextQuestionIndex: 2
-    explanationText: no
-  - questionText: LK
-    answerChoices:
-    - L
-    - K
+    - -2
     correctAnswerIndex: 1
-    difficultyMultiplier: 0
+    difficultyMultiplier: 0.2
+    nextQuestionIndex: 2
+    explanationText: Because
+  - questionText: 3+3
+    answerChoices:
+    - 2
+    - 4
+    - 6
+    correctAnswerIndex: 2
+    difficultyMultiplier: 0.2
     nextQuestionIndex: -2
-    explanationText: LOL
+    explanationText: Because
   startQuestionIndex: 0

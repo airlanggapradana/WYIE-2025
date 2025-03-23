@@ -24,6 +24,7 @@ public class QuizManager : MonoBehaviour
     private HealthSystem playerHealth;
     private HealthSystem bossHealth;
     private AttackSystem playerAttack;
+    private PlayerProgression playerProgression;
     private GameObject currentBoss;
     
     // Visual effect references
@@ -107,8 +108,11 @@ public class QuizManager : MonoBehaviour
         // Get references
         currentBoss = boss;
         bossHealth = boss.GetComponent<HealthSystem>();
-        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<HealthSystem>();
-        playerAttack = GameObject.FindGameObjectWithTag("Player").GetComponent<AttackSystem>();
+        
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        playerHealth = player.GetComponent<HealthSystem>();
+        playerAttack = player.GetComponent<AttackSystem>();
+        playerProgression = player.GetComponent<PlayerProgression>();
         
         if (bossHealth == null || playerHealth == null)
         {
@@ -514,17 +518,35 @@ public class QuizManager : MonoBehaviour
         // Correct answer - player attacks boss
         quizUI.SetFeedbackText("Correct! You attack the boss!", Color.green);
         
-        // Decide if critical hit
-        bool isCritical = Random.value <= criticalHitChance;
+        // Decide if critical hit - use player's critical chance if available
+        float criticalChance = criticalHitChance;
+        if (playerProgression != null)
+        {
+            criticalChance = playerProgression.GetCriticalHitChance();
+            Debug.Log($"Using player level-based critical chance: {criticalChance * 100}%");
+        }
+        else if (playerAttack != null)
+        {
+            criticalChance = playerAttack.GetCriticalHitChance();
+        }
+        
+        bool isCritical = Random.value <= criticalChance;
         float damageMultiplier = isCritical ? criticalHitMultiplier : 1f;
         
         // Apply damage based on player's attack system and question difficulty
         float calculatedDamage = baseDamageOnCorrect;
         if (playerAttack != null)
         {
+            // Get base damage from player's attack system
+            float playerBaseDamage = playerAttack.GetBaseDamage();
+            
             // Ensure the difficultyMultiplier is at least 1
             float difficultyMult = Mathf.Max(1f, currentQuestion.difficultyMultiplier);
-            calculatedDamage = playerAttack.GetBaseDamage() * damageMultiplier * difficultyMult;
+            
+            // Apply all multipliers
+            calculatedDamage = playerBaseDamage * damageMultiplier * difficultyMult;
+            
+            Debug.Log($"Quiz damage calculation: Base:{playerBaseDamage} * Crit:{damageMultiplier} * Difficulty:{difficultyMult} = {calculatedDamage}");
         }
         
         // Show attack effect
@@ -627,6 +649,30 @@ public class QuizManager : MonoBehaviour
         {
             // Boss defeated
             quizUI.SetFeedbackText("You defeated the boss!", Color.green);
+            
+            // Award experience if player has progression system
+            if (playerProgression != null && currentBoss != null)
+            {
+                // Try to get boss level from BossController
+                BossController bossController = currentBoss.GetComponent<BossController>();
+                int bossLevel = 1; // Default to level 1
+                float difficultyMultiplier = 1.0f;
+                
+                if (bossController != null)
+                {
+                    // Get boss phase as level (more phases = higher level)
+                    bossLevel = bossController.GetCurrentPhase() + 1;
+                    
+                    // Use difficulty multiplier of the current question if available
+                    if (currentQuestion != null)
+                    {
+                        difficultyMultiplier = Mathf.Max(1.0f, currentQuestion.difficultyMultiplier);
+                    }
+                }
+                
+                Debug.Log($"Awarding XP for defeating boss (Level {bossLevel}, Difficulty {difficultyMultiplier})");
+                playerProgression.GainBossExperience(bossLevel, difficultyMultiplier);
+            }
             
             // End the quiz with a delay
             StartCoroutine(DelayedEndQuiz(true));
