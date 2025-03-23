@@ -154,7 +154,7 @@ public class DialogueManager : MonoBehaviour
         currentNodeIndex = 0;
         dialogueActive = true;
         
-        // Disable player movement
+        // Disable player        ovement
         if (playerMovement != null)
         {
             playerMovement.SetControlsEnabled(false);

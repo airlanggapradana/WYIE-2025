@@ -57,6 +57,16 @@ public class PlayerCombat : MonoBehaviour
         bool controlsEnabled = IsPlayerControlsEnabled();
         if (!controlsEnabled) return;
         
+        // Check attack point position relative to player
+        // if (attackSystem != null && debugAttackRange)
+        // {
+        //     Transform attackPoint = attackSystem.GetAttackPoint();
+        //     if (attackPoint != null)
+        //     {
+        //         Debug.Log($"Player position: {transform.position}, Attack point position: {attackPoint.position}, Local offset: {attackPoint.localPosition}");
+        //     }
+        // }
+        
         // Basic attack
         if (Input.GetKeyDown(attackKey) && attackSystem != null)
         {
@@ -211,8 +221,25 @@ public class PlayerCombat : MonoBehaviour
             }
         }
         
-        // Return true if at least one enemy is in range
-        return hitEnemies.Length > 0;
+        foreach (Collider2D target in hitEnemies)
+        {
+            // Calculate distance to confirm we're in range
+            float distanceToTarget = Vector2.Distance(attackPoint.position, target.transform.position);
+            
+            Debug.Log($"-----DISTANCE DEBUG-----");
+            Debug.Log($"Attack Point Position: {attackPoint.position}");
+            Debug.Log($"Target Position: {target.transform.position}");
+            Debug.Log($"Target Name: {target.gameObject.name}");
+            Debug.Log($"Raw Distance: {distanceToTarget}");
+            Debug.Log($"Attack Range: {range}");
+            Debug.Log($"------------------------");
+            
+            // Return true if at least one enemy is in range
+            Debug.DrawLine(attackPoint.position, target.transform.position, Color.red, 1.0f);
+            return true;
+        }
+        
+        return false;
     }
     
     /// <summary>

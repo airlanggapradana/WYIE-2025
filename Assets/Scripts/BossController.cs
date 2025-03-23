@@ -61,7 +61,23 @@ public class BossController : MonoBehaviour
         if (healthSystem != null)
         {
             healthSystem.OnDamaged.AddListener(CheckPhaseTransition);
-            healthSystem.OnDeath.AddListener(() => SetState(BossState.Dead));
+            healthSystem.OnDeath.AddListener(() => {
+                SetState(BossState.Dead);
+                
+                // Award XP to player
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                if (player != null)
+                {
+                    PlayerProgression playerProgression = player.GetComponent<PlayerProgression>();
+                    if (playerProgression != null)
+                    {
+                        // Award XP based on boss phase
+                        int bossLevel = currentPhase + 1;
+                        Debug.Log($"Awarding XP for defeating boss (Level {bossLevel})");
+                        playerProgression.GainBossExperience(bossLevel);
+                    }
+                }
+            });
         }
         else
         {
@@ -398,5 +414,14 @@ public class BossController : MonoBehaviour
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(transform.position, quizDetectionRadius);
         }
+    }
+
+    /// <summary>
+    /// Get the current phase of the boss (0-based index)
+    /// Used for determining boss level for XP rewards
+    /// </summary>
+    public int GetCurrentPhase()
+    {
+        return currentPhase;
     }
 } 

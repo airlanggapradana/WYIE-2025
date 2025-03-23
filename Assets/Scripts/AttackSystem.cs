@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class AttackSystem : MonoBehaviour
 {
@@ -18,6 +19,15 @@ public class AttackSystem : MonoBehaviour
     [Header("Visual Effects")]
     [SerializeField] private GameObject attackEffectPrefab;
     [SerializeField] private Transform attackPoint;
+    
+    [Header("Critical Hit Settings")]
+    [SerializeField] private float criticalHitChance = 0.05f; // 5% base chance
+    [SerializeField] private float criticalHitMultiplier = 2f; // Double damage on crit
+    
+    // Events
+    public UnityEvent OnAttack;
+    public UnityEvent OnSpecialAttack;
+    public UnityEvent<float> OnDamageDealt;
     
     private bool canAttack = true;
     private bool canSpecialAttack = true;
@@ -50,6 +60,11 @@ public class AttackSystem : MonoBehaviour
                 Debug.LogError("Attack Point is still null after Awake!");
             }
         }
+        
+        // Initialize events
+        if (OnAttack == null) OnAttack = new UnityEvent();
+        if (OnSpecialAttack == null) OnSpecialAttack = new UnityEvent();
+        if (OnDamageDealt == null) OnDamageDealt = new UnityEvent<float>();
     }
     
     /// <summary>
@@ -237,4 +252,30 @@ public class AttackSystem : MonoBehaviour
     public float GetBaseDamage() => baseDamage;
     public Transform GetAttackPoint() => attackPoint;
     public float GetAttackRange() => attackRange;
+    
+    /// <summary>
+    /// Get current critical hit chance
+    /// </summary>
+    public float GetCriticalHitChance()
+    {
+        return criticalHitChance;
+    }
+    
+    /// <summary>
+    /// Set critical hit chance (used for level progression)
+    /// </summary>
+    public void SetCriticalHitChance(float newChance)
+    {
+        criticalHitChance = Mathf.Clamp01(newChance);
+    }
+
+    /// <summary>
+    /// Set the base damage value (used for level progression)
+    /// </summary>
+    public void SetBaseDamage(float newDamage)
+    {
+        baseDamage = newDamage;
+        // Also scale special attack damage proportionally
+        specialAttackDamage = baseDamage * 2f;
+    }
 } 
