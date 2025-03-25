@@ -15,7 +15,7 @@ C:/Users/rangg/Downloads/WYIE 2025
 -logFile
 Logs/AssetImportWorker1.log
 -srvPort
-53406
+54177
 -job-worker-count
 15
 -background-job-worker-count
@@ -59,12 +59,12 @@ C:/Users/rangg/Downloads/WYIE 2025
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [12720]  Target information:
+Player connection [22832]  Target information:
 
-Player connection [12720]  * "[IP] 192.168.1.8 [Port] 0 [Flags] 2 [Guid] 4198537757 [EditorId] 4198537757 [Version] 1048832 [Id] WindowsEditor(7,Airlangga) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [22832]  * "[IP] 192.168.1.8 [Port] 0 [Flags] 2 [Guid] 530869968 [EditorId] 530869968 [Version] 1048832 [Id] WindowsEditor(7,Airlangga) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [12720] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [12720] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [22832] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [22832] Host joined alternative multi-casting on [225.0.0.222:34997]...
 JobSystem: Creating JobQueue using job-worker-count value 15
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
@@ -76,7 +76,7 @@ Library Redirect Path: Library/
 [Physics::Module] SDK Version: 4.1.2
 [Physics::Module] Integration Version: 1.0.0
 [Physics::Module] Threading Mode: Multi-Threaded
-Refreshing native plugins compatible for Editor in 1.97 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 3.79 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.40f1 (157d81624ddf)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.40f1/Editor/Data/Resources/UnitySubsystems
@@ -88,49 +88,52 @@ Direct3D:
     Vendor:   NVIDIA
     VRAM:     7957 MB
     Driver:   32.0.15.7283
+Shader 'TextMeshPro/Distance Field': fallback shader 'TextMeshPro/Mobile/Distance Field' not found
+Shader 'TextMeshPro/Distance Field Overlay': fallback shader 'TextMeshPro/Mobile/Distance Field' not found
+Shader 'TextMeshPro/Distance Field SSD': fallback shader 'TextMeshPro/Mobile/Distance Field' not found
 Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.40f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.40f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.40f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56052
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56464
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.40f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.40f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.002616 seconds.
-- Loaded All Assemblies, in  0.289 seconds
+Registered in 0.004756 seconds.
+- Loaded All Assemblies, in  0.585 seconds
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.232 seconds
-Domain Reload Profiling: 520ms
-	BeginReloadAssembly (92ms)
+- Finished resetting the current domain, in  0.559 seconds
+Domain Reload Profiling: 1141ms
+	BeginReloadAssembly (207ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (25ms)
-	RebuildNativeTypeToScriptingClass (8ms)
-	initialDomainReloadingComplete (36ms)
-	LoadAllAssembliesAndSetupDomain (126ms)
-		LoadAssemblies (90ms)
+	RebuildCommonClasses (55ms)
+	RebuildNativeTypeToScriptingClass (16ms)
+	initialDomainReloadingComplete (73ms)
+	LoadAllAssembliesAndSetupDomain (230ms)
+		LoadAssemblies (203ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (124ms)
-			TypeCache.Refresh (122ms)
-				TypeCache.ScanAssembly (112ms)
+		AnalyzeDomain (226ms)
+			TypeCache.Refresh (224ms)
+				TypeCache.ScanAssembly (207ms)
 			BuildScriptInfoCaches (0ms)
-			ResolveRequiredComponents (0ms)
-	FinalizeReload (233ms)
+			ResolveRequiredComponents (1ms)
+	FinalizeReload (560ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (201ms)
+		SetupLoadedEditorAssemblies (504ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (20ms)
-			SetLoadedEditorAssemblies (3ms)
-			BeforeProcessingInitializeOnLoad (39ms)
-			ProcessInitializeOnLoadAttributes (105ms)
-			ProcessInitializeOnLoadMethodAttributes (34ms)
+			InitializePlatformSupportModulesInManaged (45ms)
+			SetLoadedEditorAssemblies (8ms)
+			BeforeProcessingInitializeOnLoad (88ms)
+			ProcessInitializeOnLoadAttributes (265ms)
+			ProcessInitializeOnLoadMethodAttributes (98ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -139,156 +142,182 @@ Domain Reload Profiling: 520ms
 Worker process is ready to serve import requests
 Import Worker Mode flag is 0x00
 Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  0.584 seconds
-Refreshing native plugins compatible for Editor in 1.35 ms, found 4 plugins.
+- Loaded All Assemblies, in  1.810 seconds
+Refreshing native plugins compatible for Editor in 2.24 ms, found 4 plugins.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.539 seconds
-Domain Reload Profiling: 1120ms
-	BeginReloadAssembly (116ms)
+- Finished resetting the current domain, in  1.252 seconds
+Domain Reload Profiling: 3051ms
+	BeginReloadAssembly (407ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (4ms)
+		DisableScriptedObjects (14ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (19ms)
-	RebuildCommonClasses (24ms)
-	RebuildNativeTypeToScriptingClass (8ms)
-	initialDomainReloadingComplete (27ms)
-	LoadAllAssembliesAndSetupDomain (405ms)
-		LoadAssemblies (285ms)
+		CreateAndSetChildDomain (53ms)
+	RebuildCommonClasses (91ms)
+	RebuildNativeTypeToScriptingClass (30ms)
+	initialDomainReloadingComplete (101ms)
+	LoadAllAssembliesAndSetupDomain (1169ms)
+		LoadAssemblies (973ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (191ms)
-			TypeCache.Refresh (134ms)
-				TypeCache.ScanAssembly (121ms)
-			BuildScriptInfoCaches (45ms)
-			ResolveRequiredComponents (8ms)
-	FinalizeReload (539ms)
+		AnalyzeDomain (451ms)
+			TypeCache.Refresh (335ms)
+				TypeCache.ScanAssembly (304ms)
+			BuildScriptInfoCaches (96ms)
+			ResolveRequiredComponents (17ms)
+	FinalizeReload (1253ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (442ms)
+		SetupLoadedEditorAssemblies (1024ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (2ms)
-			SetLoadedEditorAssemblies (4ms)
-			BeforeProcessingInitializeOnLoad (83ms)
-			ProcessInitializeOnLoadAttributes (270ms)
-			ProcessInitializeOnLoadMethodAttributes (79ms)
-			AfterProcessingInitializeOnLoad (4ms)
+			InitializePlatformSupportModulesInManaged (5ms)
+			SetLoadedEditorAssemblies (5ms)
+			BeforeProcessingInitializeOnLoad (187ms)
+			ProcessInitializeOnLoadAttributes (637ms)
+			ProcessInitializeOnLoadMethodAttributes (181ms)
+			AfterProcessingInitializeOnLoad (7ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (4ms)
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
-Refreshing native plugins compatible for Editor in 2.70 ms, found 4 plugins.
+		AwakeInstancesAfterBackupRestoration (9ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.02 seconds
+Refreshing native plugins compatible for Editor in 4.46 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 206 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 6649 unused Assets / (4.3 MB). Loaded Objects now: 7349.
-Memory consumption went from 187.0 MB to 182.7 MB.
-Total: 10.674900 ms (FindLiveObjects: 0.647100 ms CreateObjectMapping: 0.666300 ms MarkObjects: 6.579000 ms  DeleteObjects: 2.780900 ms)
+Unloading 221 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6719 unused Assets / (4.0 MB). Loaded Objects now: 7434.
+Memory consumption went from 182.3 MB to 178.3 MB.
+Total: 19.662000 ms (FindLiveObjects: 1.071800 ms CreateObjectMapping: 1.044900 ms MarkObjects: 13.244200 ms  DeleteObjects: 4.298800 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 20006.088619 seconds.
-  path: Assets/Environemnt/Medieval Forest/PNG/Background/Background_02.png
-  artifactKey: Guid(7a4b0226afa6a724196ad5bcdf3568f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Environemnt/Medieval Forest/PNG/Background/Background_02.png using Guid(7a4b0226afa6a724196ad5bcdf3568f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a18de5d1050ad7ea43e47c27caa593cd') in 0.1179507 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
+  Time since last request: 23840.951987 seconds.
+  path: Assets/Scripts/New Dialogue.asset
+  artifactKey: Guid(8bce914c237a4384cb8ccdb831bac568) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/New Dialogue.asset using Guid(8bce914c237a4384cb8ccdb831bac568) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '6182bd69bbc627f0b702c796a3349a06') in 0.0690365 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000016 seconds.
-  path: Assets/Environemnt/Medieval Forest/PNG
-  artifactKey: Guid(80a4001aa4c969947a5f6410b4e110b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Environemnt/Medieval Forest/PNG using Guid(80a4001aa4c969947a5f6410b4e110b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '26819546896c22ead59f2299e666aeb6') in 0.0005005 seconds
+  Time since last request: 0.000062 seconds.
+  path: Assets/Settings/Renderer2D.asset
+  artifactKey: Guid(424799608f7334c24bf367e4bbfa7f9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Settings/Renderer2D.asset using Guid(424799608f7334c24bf367e4bbfa7f9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '403a0a9c0aeae1e5730532c1b4a28511') in 0.0082225 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000015 seconds.
-  path: Assets/Environemnt/Medieval Forest/PNG/Background
-  artifactKey: Guid(6ae89069d687986439e611c06e04deb0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Environemnt/Medieval Forest/PNG/Background using Guid(6ae89069d687986439e611c06e04deb0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '2b7ccd454a967f8a28d216cc0938bd6a') in 0.0004434 seconds
+  Time since last request: 0.000033 seconds.
+  path: Assets/Scripts/DamagePoint.prefab
+  artifactKey: Guid(b5fb351abb0d2e340a268592038e2903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/DamagePoint.prefab using Guid(b5fb351abb0d2e340a268592038e2903) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '4042a6b00f653e6125b897a607322aab') in 0.1124365 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 14
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/Settings/Scenes
+  artifactKey: Guid(d574b2fb4661c408f80aa76c0182931f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Settings/Scenes using Guid(d574b2fb4661c408f80aa76c0182931f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '208d33276ab89d9e90bec41530e68a58') in 0.0008996 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
 
 ========================================================================
-Received Import Request.
-  Time since last request: 5.145324 seconds.
-  path: Assets/Environemnt/Medieval Forest/PNG/Collectable Object/Chest_01_Locked.png
-  artifactKey: Guid(d60b339d26cdcf54e83ba00af0f3f57c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Environemnt/Medieval Forest/PNG/Collectable Object/Chest_01_Locked.png using Guid(d60b339d26cdcf54e83ba00af0f3f57c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'edc5d7e218b0035e26b359e32ec9ff31') in 0.0312503 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  1.151 seconds
+Refreshing native plugins compatible for Editor in 2.16 ms, found 4 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.253 seconds
+Domain Reload Profiling: 2400ms
+	BeginReloadAssembly (315ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (19ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (75ms)
+	RebuildCommonClasses (59ms)
+	RebuildNativeTypeToScriptingClass (19ms)
+	initialDomainReloadingComplete (47ms)
+	LoadAllAssembliesAndSetupDomain (706ms)
+		LoadAssemblies (580ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (284ms)
+			TypeCache.Refresh (10ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (250ms)
+			ResolveRequiredComponents (18ms)
+	FinalizeReload (1253ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (945ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (5ms)
+			SetLoadedEditorAssemblies (5ms)
+			BeforeProcessingInitializeOnLoad (246ms)
+			ProcessInitializeOnLoadAttributes (568ms)
+			ProcessInitializeOnLoadMethodAttributes (109ms)
+			AfterProcessingInitializeOnLoad (11ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (23ms)
+Refreshing native plugins compatible for Editor in 5.59 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 13 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6717 unused Assets / (4.1 MB). Loaded Objects now: 7440.
+Memory consumption went from 149.7 MB to 145.6 MB.
+Total: 19.455700 ms (FindLiveObjects: 0.957200 ms CreateObjectMapping: 0.984100 ms MarkObjects: 11.382400 ms  DeleteObjects: 6.129800 ms)
 
+Prepare: number of updated asset objects reloaded= 0
 ========================================================================
-Received Import Request.
-  Time since last request: 0.000015 seconds.
-  path: Assets/Environemnt/Medieval Forest/PNG/Collectable Object/Coin_01.png
-  artifactKey: Guid(e7ff401a4a9b9b74ca01b4e8330002e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Environemnt/Medieval Forest/PNG/Collectable Object/Coin_01.png using Guid(e7ff401a4a9b9b74ca01b4e8330002e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '7b064718ea95c9ed2a9c38bbbee62a83') in 0.0299988 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  1.123 seconds
+Refreshing native plugins compatible for Editor in 2.71 ms, found 4 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.258 seconds
+Domain Reload Profiling: 2377ms
+	BeginReloadAssembly (298ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (21ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (66ms)
+	RebuildCommonClasses (50ms)
+	RebuildNativeTypeToScriptingClass (16ms)
+	initialDomainReloadingComplete (42ms)
+	LoadAllAssembliesAndSetupDomain (712ms)
+		LoadAssemblies (584ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (282ms)
+			TypeCache.Refresh (11ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (249ms)
+			ResolveRequiredComponents (16ms)
+	FinalizeReload (1259ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (980ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (5ms)
+			SetLoadedEditorAssemblies (5ms)
+			BeforeProcessingInitializeOnLoad (248ms)
+			ProcessInitializeOnLoadAttributes (587ms)
+			ProcessInitializeOnLoadMethodAttributes (123ms)
+			AfterProcessingInitializeOnLoad (11ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (19ms)
+Refreshing native plugins compatible for Editor in 6.29 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 13 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 6717 unused Assets / (3.2 MB). Loaded Objects now: 7442.
+Memory consumption went from 161.2 MB to 158.0 MB.
+Total: 20.969500 ms (FindLiveObjects: 0.998100 ms CreateObjectMapping: 0.842800 ms MarkObjects: 13.335400 ms  DeleteObjects: 5.789100 ms)
 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000015 seconds.
-  path: Assets/Environemnt/Medieval Forest/PNG/Collectable Object/Diamond.png
-  artifactKey: Guid(ce278fd396c28ca449b5bf405fdd6490) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Environemnt/Medieval Forest/PNG/Collectable Object/Diamond.png using Guid(ce278fd396c28ca449b5bf405fdd6490) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a3488e5089f3cea16c5ac2c92f843277') in 0.0302692 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000021 seconds.
-  path: Assets/Environemnt/Medieval Forest/PNG/Collectable Object/Coin_03.png
-  artifactKey: Guid(9d8aa6f48042d9e49af80b13ec4e79a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Environemnt/Medieval Forest/PNG/Collectable Object/Coin_03.png using Guid(9d8aa6f48042d9e49af80b13ec4e79a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'ca5485852751ddb0ef48359d3dde6cb9') in 0.0313312 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000013 seconds.
-  path: Assets/Environemnt/Medieval Forest/PNG/Collectable Object/Chest_01_Unlocked.png
-  artifactKey: Guid(929dcf4b39e86fb4196cd13528e3a4d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Environemnt/Medieval Forest/PNG/Collectable Object/Chest_01_Unlocked.png using Guid(929dcf4b39e86fb4196cd13528e3a4d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '43ea98bc88de6d44fdeaeb7ba967417a') in 0.0321706 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000012 seconds.
-  path: Assets/Environemnt/Medieval Forest/PNG/Collectable Object/Coin_05.png
-  artifactKey: Guid(bc2b15e31ca64ea4d915520065074df2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Environemnt/Medieval Forest/PNG/Collectable Object/Coin_05.png using Guid(bc2b15e31ca64ea4d915520065074df2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '6f86e40403c47ada6c01ca9f363b63ef') in 0.0292251 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.237867 seconds.
-  path: Assets/Environemnt/Medieval Forest/PNG/Environment/Decor_Statue.png
-  artifactKey: Guid(1fe29b103bbf9cc4ba68e2c13f7f9668) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Environemnt/Medieval Forest/PNG/Environment/Decor_Statue.png using Guid(1fe29b103bbf9cc4ba68e2c13f7f9668) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8c1e5fe8750cdfa23f788a2dca48190e') in 0.0330472 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000025 seconds.
-  path: Assets/Environemnt/Medieval Forest/PNG/Environment/Sign_02.png
-  artifactKey: Guid(48f3b0842967bcc45b0bdbb45559823c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Environemnt/Medieval Forest/PNG/Environment/Sign_02.png using Guid(48f3b0842967bcc45b0bdbb45559823c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '162b7c8b8cc88a7aa8df7cc037f0c399') in 0.0321969 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000020 seconds.
-  path: Assets/Environemnt/Medieval Forest/PNG/Environment/Sign_05.png
-  artifactKey: Guid(b8ab7248e718da047bbc65c6e488e092) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Environemnt/Medieval Forest/PNG/Environment/Sign_05.png using Guid(b8ab7248e718da047bbc65c6e488e092) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '77b3811e6a26caaae136a06f06f11261') in 0.0250117 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000020 seconds.
-  path: Assets/Environemnt/Medieval Forest/PNG/Environment/Sign_03.png
-  artifactKey: Guid(322cdc5f42a550942906bcf919449490) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Environemnt/Medieval Forest/PNG/Environment/Sign_03.png using Guid(322cdc5f42a550942906bcf919449490) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '3188fe625e4d18068f49d1080055fffa') in 0.0235224 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
+Prepare: number of updated asset objects reloaded= 0
 Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
 AssetImportWorker is now disconnected from the server
 Process exiting
