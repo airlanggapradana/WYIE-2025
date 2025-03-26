@@ -62,6 +62,12 @@ public class QuizManager : MonoBehaviour
         
         // Pre-create visual effects for the object pool
         PreloadVisualEffects();
+        
+        // Try to find a QuizUI if none is registered yet
+        if (quizUI == null)
+        {
+            FindAndRegisterQuizUI();
+        }
     }
     
     private void Update()
@@ -91,6 +97,7 @@ public class QuizManager : MonoBehaviour
     public void RegisterQuizUI(QuizUI ui)
     {
         quizUI = ui;
+    
         Debug.Log("QuizUI registered with QuizManager");
     }
     
@@ -99,10 +106,20 @@ public class QuizManager : MonoBehaviour
     /// </summary>
     public void StartQuizBattle(GameObject boss, QuizSet specificQuizSet = null)
     {
+        // Try to find a QuizUI if not already registered
         if (quizUI == null)
         {
-            Debug.LogError("Failed to start quiz: QuizUI not registered with QuizManager");
-            return;
+            Debug.LogWarning("No QuizUI registered with QuizManager. Attempting to find one...");
+            QuizUI foundUI = FindObjectOfType<QuizUI>();
+            if (foundUI != null)
+            {
+                foundUI.RegisterWithQuizManager(this);
+            }
+            else
+            {
+                Debug.LogError("Failed to start quiz: QuizUI not registered with QuizManager and couldn't find one in the scene");
+                return;
+            }
         }
         
         // Get references
@@ -135,13 +152,25 @@ public class QuizManager : MonoBehaviour
         
         // Start coroutine to properly sequence operations
         StartCoroutine(InitializeQuizUICoroutine());
+        Debug.Log("QuizManager: StartQuizBattle called");
     }
     
     private IEnumerator InitializeQuizUICoroutine()
     {
         // First, show the quiz UI
         quizActive = true;
-        quizUI.GetQuizPanel().SetActive(true);
+        
+        // Use the proper method to show and initialize the quiz panel
+        if (quizUI != null)
+        {
+            Debug.Log("QuizManager: Initializing quiz UI");
+            quizUI.ShowQuizPanel();
+        }
+        else
+        {
+            Debug.LogError("QuizUI is null when trying to initialize the quiz UI!");
+            yield break;
+        }
         
         // Wait for the end of frame to ensure UI is properly set up
         yield return new WaitForEndOfFrame();
@@ -811,4 +840,21 @@ public class QuizManager : MonoBehaviour
     
     // Public properties
     public bool IsQuizActive => quizActive || processingAnswer; // Update property to include processingAnswer flag
+    
+    /// <summary>
+    /// Actively searches for a QuizUI in the scene and registers it
+    /// </summary>
+    private void FindAndRegisterQuizUI()
+    {
+        QuizUI foundUI = FindObjectOfType<QuizUI>();
+        if (foundUI != null)
+        {
+            Debug.Log("QuizManager found a QuizUI in the scene and is registering with it");
+            foundUI.RegisterWithQuizManager(this);
+        }
+        else
+        {
+            Debug.LogWarning("QuizManager couldn't find a QuizUI in the scene during initialization. Make sure your QuizUI GameObject is active in the scene.");
+        }
+    }
 } 

@@ -4484,6 +4484,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1608726864}
   - component: {fileID: 1608726863}
+  - component: {fileID: 1608726865}
   m_Layer: 0
   m_Name: QuizManager
   m_TagString: Untagged
@@ -4527,6 +4528,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1608726865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608726862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdcd73e72e13a414f8d1e927fbca0982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quizPanel: {fileID: 2033602750}
+  questionText: {fileID: 2125888625}
+  answerButtonPrefab: {fileID: 2468705715208816495, guid: d2374be4011d4284cacfcd701fe132f1, type: 3}
+  answerContainer: {fileID: 684688638}
+  feedbackText: {fileID: 1251843541}
+  playerHealthSlider: {fileID: 280083287}
+  bossHealthSlider: {fileID: 736585681}
+  playerHealthText: {fileID: 1251843541}
+  bossHealthText: {fileID: 1251843541}
+  titleText: {fileID: 1251843541}
 --- !u!1 &1763460668
 GameObject:
   m_ObjectHideFlags: 0
@@ -5320,9 +5343,9 @@ MonoBehaviour:
   feedbackText: {fileID: 1251843541}
   playerHealthSlider: {fileID: 280083287}
   bossHealthSlider: {fileID: 736585681}
-  playerHealthText: {fileID: 0}
-  bossHealthText: {fileID: 0}
-  titleText: {fileID: 0}
+  playerHealthText: {fileID: 1251843541}
+  bossHealthText: {fileID: 1251843541}
+  titleText: {fileID: 1251843541}
 --- !u!1 &2051714320
 GameObject:
   m_ObjectHideFlags: 0
