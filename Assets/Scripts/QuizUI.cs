@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System.Collections;
 
 /// <summary>
 /// This script helps set up the UI elements for the quiz system
@@ -26,24 +27,73 @@ public class QuizUI : MonoBehaviour
     
     private void Awake()
     {
-        // Ensure the quiz panel is hidden at start
-        if (quizPanel != null)
-        {
-            quizPanel.SetActive(false);
-        }
+        // IMPORTANT: Make sure this script's GameObject is active in the scene
+        // even if quizPanel is inactive
         
         // Validate UI elements
         ValidateUISetup();
         
         // Register with QuizManager
-        QuizManager quizManager = FindObjectOfType<QuizManager>();
+        RegisterWithQuizManager();
+        
+        // Ensure the quiz panel is hidden at start, but only if this script's GameObject is active
+        HideQuizPanel();
+    }
+    
+    private void OnEnable()
+    {
+        // Try to register again when enabled
+        // This ensures registration works even if QuizManager was created after this object
+        RegisterWithQuizManager();
+    }
+    
+    /// <summary>
+    /// Explicitly hide the quiz panel
+    /// </summary>
+    public void HideQuizPanel()
+    {
+        if (quizPanel != null)
+        {
+            quizPanel.SetActive(false);
+        }
+    }
+    
+    /// <summary>
+    /// Try to register with the QuizManager
+    /// </summary>
+    private void RegisterWithQuizManager()
+    {
+        // Register with QuizManager if it exists
+        QuizManager quizManager = QuizManager.Instance;
         if (quizManager != null)
         {
             RegisterWithQuizManager(quizManager);
         }
         else
         {
-            Debug.LogWarning("No QuizManager found in scene. UI elements won't be connected automatically.");
+            Debug.LogWarning("No QuizManager found in scene. UI elements won't be connected automatically. Will try again when QuizManager is available.");
+            
+            // We'll try again in a moment in case QuizManager is still initializing
+            StartCoroutine(TryRegisterAgain());
+        }
+    }
+    
+    /// <summary>
+    /// Coroutine to try registration again after a short delay
+    /// </summary>
+    private System.Collections.IEnumerator TryRegisterAgain()
+    {
+        // Wait a short time to allow QuizManager to initialize
+        yield return new WaitForSeconds(0.5f);
+        
+        QuizManager quizManager = QuizManager.Instance;
+        if (quizManager != null)
+        {
+            RegisterWithQuizManager(quizManager);
+        }
+        else
+        {
+            Debug.LogWarning("QuizManager still not found after delay. Registration failed.");
         }
     }
     
@@ -287,6 +337,34 @@ public class QuizUI : MonoBehaviour
         {
             feedbackText.text = text;
             feedbackText.color = color;
+        }
+    }
+    
+    /// <summary>
+    /// Show the quiz panel and ensure all elements are initialized correctly
+    /// </summary>
+    public void ShowQuizPanel()
+    {
+        if (quizPanel != null)
+        {
+            // Make sure all UI elements are properly set up before showing
+            quizPanel.SetActive(true);
+            
+            // Clear any leftover feedback or question text
+            if (feedbackText != null)
+            {
+                feedbackText.text = "";
+            }
+            
+            if (questionText != null)
+            {
+                questionText.text = "Loading questions...";
+            }
+            
+            // Make sure we clear any previous answer buttons
+            ClearAnswerButtons();
+            
+            Debug.Log("Quiz panel is now active and ready");
         }
     }
     
