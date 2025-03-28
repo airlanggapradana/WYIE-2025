@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float climbTransitionSpeed = 5f;
     
     public Rigidbody2D rb;
+    Animator animator;
     private bool isGrounded;
     private float horizontalInput;
     private bool canJump = true;
@@ -61,7 +62,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        
+        animator = GetComponent<Animator>();
+
         // Find dialogue manager
         dialogueManager = FindObjectOfType<DialogueManager>();
         
@@ -327,7 +329,7 @@ public class PlayerMovement : MonoBehaviour
             Move();
         }
     }
-    
+
     void Move()
     {
         // If controls are disabled, stop moving
@@ -340,7 +342,9 @@ public class PlayerMovement : MonoBehaviour
         // Calculate velocity
         Vector2 velocity = rb.linearVelocity;
         velocity.x = horizontalInput * moveSpeed;
-        
+        animator.SetFloat("XVel", Mathf.Abs(rb.linearVelocityX));
+        animator.SetFloat("YVel", rb.linearVelocity.y);
+
         // Apply velocity
         rb.linearVelocity = velocity;
         
@@ -354,6 +358,7 @@ public class PlayerMovement : MonoBehaviour
     void Jump()
     {
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        animator.SetBool("IsJumping", !isGrounded);
     }
     
     void CheckForLedge()
