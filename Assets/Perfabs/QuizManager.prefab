@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5890233551179298238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3638545156047337068}
+  - component: {fileID: 502060124514084000}
+  - component: {fileID: 3934402243658188119}
+  m_Layer: 0
+  m_Name: QuizManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3638545156047337068
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890233551179298238}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 27.022156, y: -1.948903, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &502060124514084000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890233551179298238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 991ccb3291e70164f9cc216e90f4520d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quizSets: []
+  baseDamageOnCorrect: 15
+  baseDamageOnIncorrect: 10
+  criticalHitChance: 0.1
+  criticalHitMultiplier: 2
+  shuffleQuestions: 0
+  answerAnimationTime: 1.5
+  correctAnswerEffect: {fileID: 4525408062129669949, guid: 9d37cb5dd092a284aad94e2f1279df31, type: 3}
+  wrongAnswerEffect: {fileID: 4525408062129669949, guid: 9d37cb5dd092a284aad94e2f1279df31, type: 3}
+--- !u!114 &3934402243658188119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5890233551179298238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdcd73e72e13a414f8d1e927fbca0982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quizPanel: {fileID: 0}
+  questionText: {fileID: 0}
+  answerButtonPrefab: {fileID: 2468705715208816495, guid: d2374be4011d4284cacfcd701fe132f1, type: 3}
+  answerContainer: {fileID: 0}
+  feedbackText: {fileID: 0}
+  playerHealthSlider: {fileID: 0}
+  bossHealthSlider: {fileID: 0}
+  playerHealthText: {fileID: 0}
+  bossHealthText: {fileID: 0}
+  titleText: {fileID: 0}
+  selectionArrowPrefab: {fileID: 8496170252742108553, guid: 81ab8589e5a98294280903bfe01f8813, type: 3}

@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      skeleton-punch_8_0: 4347347656114120441
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

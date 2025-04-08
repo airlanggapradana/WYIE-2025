@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      skeleton-KO_24_0: 8611913555292784252
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

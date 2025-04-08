@@ -278,4 +278,9 @@ public class AttackSystem : MonoBehaviour
         // Also scale special attack damage proportionally
         specialAttackDamage = baseDamage * 2f;
     }
+
+    public void SetDamage(float newDamage)
+    {
+        baseDamage = newDamage;
+    }
 } 
