@@ -77,6 +77,15 @@ public class BossController : MonoBehaviour
                         playerProgression.GainBossExperience(bossLevel);
                     }
                 }
+                
+                // Trigger victory and level transition
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.Victory();
+                    
+                    // Schedule level transition after victory UI is shown
+                    StartCoroutine(ScheduleNextLevel());
+                }
             });
         }
         else
@@ -269,8 +278,8 @@ public class BossController : MonoBehaviour
         if (animator == null) return;
         
         // Update animation parameters based on state
-        animator.SetInteger("State", (int)currentState);
-        animator.SetFloat("HealthPercent", healthSystem != null ? healthSystem.GetHealthPercentage() : 1f);
+        // animator.SetInteger("State", (int)currentState);
+        // animator.SetFloat("HealthPercent", healthSystem != null ? healthSystem.GetHealthPercentage() : 1f);
     }
     
     private void SetState(BossState newState)
@@ -396,6 +405,21 @@ public class BossController : MonoBehaviour
         
         // Unsubscribe from events
         healthSystem.OnDamaged.RemoveListener(CheckQuizEndCondition);
+    }
+    
+    /// <summary>
+    /// Schedule transition to next level after a delay
+    /// </summary>
+    private IEnumerator ScheduleNextLevel()
+    {
+        // Wait for victory screen to display (using GameManager's victoryDelay)
+        yield return new WaitForSeconds(3f);
+        
+        // Trigger level transition if LevelManager exists
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.AdvanceToNextLevel();
+        }
     }
     
     private void OnDrawGizmosSelected()

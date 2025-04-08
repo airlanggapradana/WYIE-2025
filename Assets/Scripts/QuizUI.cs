@@ -25,6 +25,11 @@ public class QuizUI : MonoBehaviour
     // List to store dynamically created answer buttons
     private List<GameObject> answerButtonInstances = new List<GameObject>();
     
+    // Add this field to store the arrow prefab
+    [Header("Button Selection")]
+    [SerializeField] private GameObject selectionArrowPrefab;
+    private List<GameObject> arrowInstances = new List<GameObject>();
+    
     private void Awake()
     {
         // IMPORTANT: Make sure this script's GameObject is active in the scene
@@ -275,46 +280,117 @@ public class QuizUI : MonoBehaviour
     }
     
     /// <summary>
-    /// Clears all dynamically created answer buttons
-    /// </summary>
-    public void ClearAnswerButtons()
-    {
-        foreach (GameObject button in answerButtonInstances)
-        {
-            Destroy(button);
-        }
-        answerButtonInstances.Clear();
-    }
-    
-    /// <summary>
     /// Updates the selection state of answer buttons
     /// </summary>
     public void UpdateAnswerSelection(int selectedIndex)
     {
+        // Clear any existing arrows
+        ClearSelectionArrows();
+        
         for (int i = 0; i < answerButtonInstances.Count; i++)
         {
             // Use the button's image component to show selection
             Image btnImage = answerButtonInstances[i].GetComponent<Image>();
-            if (btnImage != null)
+            // Find the text component
+            TextMeshProUGUI buttonText = answerButtonInstances[i].GetComponentInChildren<TextMeshProUGUI>();
+            if (buttonText == null)
             {
-                Color color = btnImage.color;
+                Text legacyText = answerButtonInstances[i].GetComponentInChildren<Text>();
+                if (legacyText != null)
+                {
+                    // Handle legacy Text component
+                    if (i == selectedIndex)
+                    {
+                        legacyText.color = Color.yellow; // Yellow text for selected button
+                    }
+                    else
+                    {
+                        legacyText.color = Color.white; // White text for unselected buttons
+                    }
+                }
+            }
+            else
+            {
+                // Handle TextMeshProUGUI component
                 if (i == selectedIndex)
                 {
-                    // Highlighted selection
-                    color.a = 1.0f;
+                    buttonText.color = Color.yellow; // Yellow text for selected button
+                }
+                else
+                {
+                    buttonText.color = Color.white; // White text for unselected buttons
+                }
+            }
+            
+            if (btnImage != null)
+            {
+                if (i == selectedIndex)
+                {
+                    // Make sure we preserve the original RGB values while changing alpha
+                    Color color = btnImage.color;
+                    // Set alpha to a very low value for near-transparency
+                    color.a = 0f; // Very transparent when selected (adjust as needed)
                     btnImage.color = color;
+                    
+                    // Ensure the image type is set to allow transparency
+                    btnImage.type = Image.Type.Sliced;
+                    
                     // Option to scale up selected button for better visibility
                     answerButtonInstances[i].transform.localScale = Vector3.one * 1.1f;
+                    
+                    // Create and position arrow for the selected button
+                    if (selectionArrowPrefab != null)
+                    {
+                        GameObject arrow = Instantiate(selectionArrowPrefab, answerButtonInstances[i].transform);
+                        // Position the arrow to the right of the button
+                        RectTransform arrowRect = arrow.GetComponent<RectTransform>();
+                        if (arrowRect != null)
+                        {
+                            arrowRect.anchoredPosition = new Vector2(-80f, 0f); // Positive X value moves it to the right
+                            arrowRect.anchorMin = new Vector2(1, 0.5f); // Set anchor to right center
+                            arrowRect.anchorMax = new Vector2(1, 0.5f); // Set anchor to right center
+                            arrowRect.pivot = new Vector2(0f, 0.5f); // Set pivot to left center of arrow
+                        }
+                        arrowInstances.Add(arrow);
+                    }
                 }
                 else
                 {
                     // Normal state
-                    color.a = 0.6f;
+                    Color color = btnImage.color;
+                    color.a = 0f; // Semi-transparent for non-selected buttons
                     btnImage.color = color;
                     answerButtonInstances[i].transform.localScale = Vector3.one;
                 }
             }
         }
+    }
+    
+    /// <summary>
+    /// Clears all selection arrows
+    /// </summary>
+    private void ClearSelectionArrows()
+    {
+        foreach (GameObject arrow in arrowInstances)
+        {
+            Destroy(arrow);
+        }
+        arrowInstances.Clear();
+    }
+    
+    /// <summary>
+    /// Clears all dynamically created answer buttons
+    /// </summary>
+    public void ClearAnswerButtons()
+    {
+        // Also clear any selection arrows
+        ClearSelectionArrows();
+        
+        foreach (GameObject button in answerButtonInstances)
+        {
+            Destroy(button);
+        }
+        answerButtonInstances.Clear();
     }
     
     /// <summary>

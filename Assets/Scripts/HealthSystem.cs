@@ -8,69 +8,69 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float currentHealth;
     [SerializeField] private float defense = 0f;
-    
+
     [Header("Combat Settings")]
     [SerializeField] private float criticalHitChance = 0.1f; // 10% chance
     [SerializeField] private float criticalHitMultiplier = 2f; // Double damage on critical
-    
+
     [Header("Regeneration Settings")]
     [SerializeField] private bool enableNaturalRegeneration = false;
     [SerializeField] private float regenerationRate = 5f; // Health per second
     [SerializeField] private float regenerationDelay = 5f; // Seconds after damage before regeneration starts
-    
+
     [Header("Visual Feedback")]
     [SerializeField] private GameObject damageTextPrefab;
     [SerializeField] private Transform damageTextSpawnPoint;
     [SerializeField] private GameObject healthBar;
-    
+
     [Header("Events")]
     public UnityEvent OnDamaged;
     public UnityEvent OnHealed;
     public UnityEvent OnDeath;
-    
+
     private bool isRegenerating = false;
     private float lastDamageTime;
     private Coroutine regenerationCoroutine;
     private bool isDead = false;
-    
+
     // Component references
     private Animator animator;
     private Transform healthSystemPanelTransform; // Add cached reference
-    
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
     }
-    
+
     private void Start()
     {
         // Initialize health to max at start
         currentHealth = maxHealth;
         lastDamageTime = -regenerationDelay; // Allow immediate regeneration if enabled
-        
+
         // Cache HealthSystemPanel reference
         GameObject healthSystemPanel = GameObject.Find("HealthSystemPanel");
         if (healthSystemPanel != null)
         {
             healthSystemPanelTransform = healthSystemPanel.transform;
         }
-        
+
         Debug.Log("start: " + currentHealth);
         // Start regeneration if enabled
         if (enableNaturalRegeneration)
         {
             regenerationCoroutine = StartCoroutine(RegenerateHealth());
         }
-        
+
         // Ensure damage text spawn point exists
         if (damageTextSpawnPoint == null)
         {
             damageTextSpawnPoint = transform;
         }
-        
+
         UpdateHealthBar();
     }
-    
+
     /// <summary>
     /// Applies damage to this character
     /// </summary>
@@ -81,22 +81,22 @@ public class HealthSystem : MonoBehaviour
     public float TakeDamage(float baseDamage, bool ignoreDefense = false, bool guaranteedCritical = false)
     {
         if (isDead) return 0f;
-        
+
         // Calculate if this is a critical hit
         bool isCritical = guaranteedCritical || Random.value <= criticalHitChance;
         float damageMultiplier = isCritical ? criticalHitMultiplier : 1f;
-        
+
         // Apply defense reduction if not ignored
         float effectiveDamage = baseDamage * damageMultiplier;
         if (!ignoreDefense)
         {
             effectiveDamage = Mathf.Max(1f, effectiveDamage - defense);
         }
-        
+
         // Apply damage
         currentHealth = Mathf.Max(0f, currentHealth - effectiveDamage);
         lastDamageTime = Time.time;
-        
+
         // Display damage text
         if (damageTextPrefab != null)
         {
@@ -107,25 +107,25 @@ public class HealthSystem : MonoBehaviour
         Debug.Log("get damage text spawn point: " + damageTextSpawnPoint);
         // Update health bar
         UpdateHealthBar();
-        
+
         // Trigger damage event
         OnDamaged?.Invoke();
-        
+
         // Apply animation effects
         if (animator != null)
         {
             animator.SetTrigger("Hit");
         }
-        
+
         // Check for death
         if (currentHealth <= 0 && !isDead)
         {
             Die();
         }
-        
+
         return effectiveDamage;
     }
-    
+
     /// <summary>
     /// Heals the character by the specified amount
     /// </summary>
@@ -134,29 +134,29 @@ public class HealthSystem : MonoBehaviour
     public float Heal(float healAmount)
     {
         if (isDead) return 0f;
-        
+
         float previousHealth = currentHealth;
         currentHealth = Mathf.Min(maxHealth, currentHealth + healAmount);
         float actualHealAmount = currentHealth - previousHealth;
-        
+
         // Show heal text with positive number
         if (damageTextPrefab != null && actualHealAmount > 0)
         {
             ShowHealText(actualHealAmount);
         }
-        
+
         // Update health bar
         UpdateHealthBar();
-        
+
         // Trigger heal event
         if (actualHealAmount > 0)
         {
             OnHealed?.Invoke();
         }
-        
+
         return actualHealAmount;
     }
-    
+
     /// <summary>
     /// Use a healing item to recover health
     /// </summary>
@@ -165,7 +165,7 @@ public class HealthSystem : MonoBehaviour
     {
         Heal(healAmount);
     }
-    
+
     /// <summary>
     /// Apply a temporary defense buff
     /// </summary>
@@ -175,58 +175,114 @@ public class HealthSystem : MonoBehaviour
     {
         StartCoroutine(DefenseBuffCoroutine(buffAmount, duration));
     }
-    
+
     private IEnumerator DefenseBuffCoroutine(float buffAmount, float duration)
     {
         defense += buffAmount;
         yield return new WaitForSeconds(duration);
         defense -= buffAmount;
     }
-    
+
+    /// <summary>
+    /// Reset health to max value for respawning
+    /// </summary>
+    public void ResetHealth()
+    {
+        isDead = false;
+        currentHealth = maxHealth;
+        UpdateHealthBar();
+
+        // Re-enable any components that were disabled on death
+        if (animator != null)
+        {
+            animator.SetTrigger("Respawn");
+        }
+
+        // Re-enable colliders if they were disabled
+        Collider[] colliders = GetComponents<Collider>();
+        foreach (Collider col in colliders)
+        {
+            col.enabled = true;
+        }
+
+        Collider2D[] colliders2D = GetComponents<Collider2D>();
+        foreach (Collider2D col in colliders2D)
+        {
+            col.enabled = true;
+        }
+
+        // Start regeneration if enabled
+        if (enableNaturalRegeneration && regenerationCoroutine == null)
+        {
+            regenerationCoroutine = StartCoroutine(RegenerateHealth());
+        }
+
+        Debug.Log($"Health reset to {currentHealth}/{maxHealth}");
+    }
+
     private void Die()
     {
         isDead = true;
-        
+
         // Stop regeneration
         if (regenerationCoroutine != null)
         {
             StopCoroutine(regenerationCoroutine);
+            regenerationCoroutine = null;
         }
-        
+
         // Play death animation
         if (animator != null)
         {
             animator.SetTrigger("Death");
         }
-        
+
         // Trigger death event
         OnDeath?.Invoke();
-        
+
         // Determine game flow based on who died
         if (CompareTag("Player"))
         {
-            // Player died - trigger game over
-            Debug.Log("Player died - Game Over");
-            
-            // Add delay before game over screen
-            StartCoroutine(DelayedGameOver());
+            // Player died - check for checkpoint respawn
+            Debug.Log("Player died - Checking for respawn");
+
+            // If CheckpointManager exists, try to respawn
+            if (CheckpointManager.Instance != null)
+            {
+                // Use delayed respawn to allow death animation to play
+                StartCoroutine(DelayedRespawnAttempt());
+            }
+            else
+            {
+                // Fallback to game over if no checkpoint system
+                StartCoroutine(DelayedGameOver());
+            }
         }
         else if (CompareTag("Boss"))
         {
             // Boss died - player wins
             Debug.Log("Boss defeated - Victory!");
             Debug.Log("Object: " + gameObject + " currentHealth: " + currentHealth);
-            
+
             // Add victory logic
             StartCoroutine(DelayedVictory());
         }
     }
-    
+
+    private IEnumerator DelayedRespawnAttempt()
+    {
+        // Wait for death animation
+        yield return new WaitForSeconds(1f);
+
+        // Try to respawn via CheckpointManager
+        CheckpointManager.Instance.RespawnPlayer();
+    }
+
     private IEnumerator DelayedGameOver()
     {
         // Wait for death animation
         yield return new WaitForSeconds(2f);
-        
+
         // Trigger game over screen using GameManager
         GameManager gameManager = GameManager.Instance;
         if (gameManager != null)
@@ -238,12 +294,12 @@ public class HealthSystem : MonoBehaviour
             Debug.LogWarning("No GameManager found. Cannot trigger Game Over screen.");
         }
     }
-    
+
     private IEnumerator DelayedVictory()
     {
         // Wait for death animation
         yield return new WaitForSeconds(2f);
-        
+
         // Trigger victory sequence using GameManager
         GameManager gameManager = GameManager.Instance;
         if (gameManager != null)
@@ -255,31 +311,31 @@ public class HealthSystem : MonoBehaviour
             Debug.LogWarning("No GameManager found. Cannot trigger Victory screen.");
         }
     }
-    
+
     private IEnumerator RegenerateHealth()
     {
         while (true)
         {
             // Wait until enough time has passed since last damage
             yield return new WaitUntil(() => Time.time >= lastDamageTime + regenerationDelay);
-            
+
             // Only regenerate if not at max health
             if (currentHealth < maxHealth)
             {
                 Heal(regenerationRate * Time.deltaTime);
             }
-            
+
             yield return null;
         }
     }
-    
+
     private void ShowDamageText(float damage, bool isCritical)
     {
         if (damageTextPrefab != null && damageTextSpawnPoint != null)
         {
             // Instantiate text prefab
             GameObject damageTextObj = Instantiate(damageTextPrefab, damageTextSpawnPoint.position, Quaternion.identity);
-            
+
             // Use cached reference instead of GameObject.Find at runtime
             if (healthSystemPanelTransform != null)
             {
@@ -319,19 +375,19 @@ public class HealthSystem : MonoBehaviour
                     damageText.text = text;
                 }
             }
-            
+
             // Destroy after animation
             Destroy(damageTextObj, 1f);
         }
     }
-    
+
     private void ShowHealText(float healAmount)
     {
         if (damageTextPrefab != null && damageTextSpawnPoint != null)
         {
             // Instantiate text prefab
             GameObject healTextObj = Instantiate(damageTextPrefab, damageTextSpawnPoint.position, Quaternion.identity);
-            
+
             // Use cached reference instead of GameObject.Find at runtime
             if (healthSystemPanelTransform != null)
             {
@@ -352,7 +408,7 @@ public class HealthSystem : MonoBehaviour
                     healTextObj.transform.SetParent(null);
                 }
             }
-            
+
             // Get text component and set value
             TextMeshProUGUI healText = healTextObj.GetComponentInChildren<TextMeshProUGUI>();
             if (healText != null)
@@ -360,12 +416,12 @@ public class HealthSystem : MonoBehaviour
                 // Format with color for healing
                 healText.text = "<color=green>+" + Mathf.RoundToInt(healAmount).ToString() + "</color>";
             }
-            
+
             // Destroy after animation
             Destroy(healTextObj, 1f);
         }
     }
-    
+
     private void UpdateHealthBar()
     {
         Debug.Log("UpdateHealthBar: " + healthBar);
@@ -380,19 +436,19 @@ public class HealthSystem : MonoBehaviour
             }
         }
     }
-    
+
     // Public getters
     public float GetCurrentHealth() => currentHealth;
     public float GetMaxHealth() => maxHealth;
     public float GetHealthPercentage() => currentHealth / maxHealth;
     public bool IsDead() => isDead;
-    
+
     // For editor/debug visibility
     private void OnGUI()
     {
         // Uncomment for debug display
-        
-            GUI.Label(new Rect(40, 40, 200, 20), gameObject.name + " Health: " + currentHealth + "/" + maxHealth);
-   
+
+        GUI.Label(new Rect(40, 40, 200, 20), gameObject.name + " Health: " + currentHealth + "/" + maxHealth);
+
     }
-} 
+}
