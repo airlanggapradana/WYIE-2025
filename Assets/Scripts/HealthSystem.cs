@@ -447,8 +447,8 @@ public class HealthSystem : MonoBehaviour
     private void OnGUI()
     {
         // Uncomment for debug display
-
-        GUI.Label(new Rect(40, 40, 200, 20), gameObject.name + " Health: " + currentHealth + "/" + maxHealth);
+// 
+        // GUI.Label(new Rect(40, 40, 200, 20), gameObject.name + " Health: " + currentHealth + "/" + maxHealth);
 
     }
 }

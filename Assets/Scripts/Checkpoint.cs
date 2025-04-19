@@ -73,11 +73,12 @@ public class Checkpoint : MonoBehaviour
     {
         if (!drawGizmo) return;
 
-        Gizmos.color = isActive ? Color.green : gizmoColor;
-        Gizmos.DrawCube(transform.position, gizmoSize);
+        // BUG: Draws a cube instead of a sphere
+        // Gizmos.color = isActive ? Color.green : gizmoColor;
+        // Gizmos.DrawCube(transform.position, gizmoSize);
 
-        // Draw ID text
-        UnityEditor.Handles.color = Color.white;
-        UnityEditor.Handles.Label(transform.position + Vector3.up * 1.5f, $"Checkpoint {checkpointID}");
+        // // Draw ID text
+        // UnityEditor.Handles.color = Color.white;
+        // UnityEditor.Handles.Label(transform.position + Vector3.up * 1.5f, $"Checkpoint {checkpointID}");
     }
 }

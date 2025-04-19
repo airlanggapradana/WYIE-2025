@@ -52,7 +52,6 @@ public class QuizManager : MonoBehaviour
         }
         
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
     
     private void Start()
@@ -175,8 +174,18 @@ public class QuizManager : MonoBehaviour
         // Wait for the end of frame to ensure UI is properly set up
         yield return new WaitForEndOfFrame();
         
-        // Now it's safe to pause the game
-        Time.timeScale = 0;
+        // Instead of using Time.timeScale, we'll use a more web-friendly approach
+        // by pausing specific game systems instead
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            // For web builds, we'll just ensure the UI is visible
+            // and handle game pause through other means
+            Debug.Log("WebGL build detected - using alternative pause method");
+        }
+        else
+        {
+            Time.timeScale = 0;
+        }
         
         // Display first question
         DisplayNextQuestion();
@@ -196,12 +205,20 @@ public class QuizManager : MonoBehaviour
         
         if (quizUI != null)
         {
-            // Force the panel to hide
-            GameObject quizPanel = quizUI.GetQuizPanel();
-            if (quizPanel != null && quizPanel.activeSelf)
+            // Add a small delay before hiding the panel in web builds
+            if (Application.platform == RuntimePlatform.WebGLPlayer)
             {
-                Debug.Log("Hiding quiz panel");
-                quizPanel.SetActive(false);
+                StartCoroutine(DelayedHidePanel());
+            }
+            else
+            {
+                // Force the panel to hide
+                GameObject quizPanel = quizUI.GetQuizPanel();
+                if (quizPanel != null && quizPanel.activeSelf)
+                {
+                    Debug.Log("Hiding quiz panel");
+                    quizPanel.SetActive(false);
+                }
             }
             
             quizUI.ClearAnswerButtons();
@@ -219,7 +236,10 @@ public class QuizManager : MonoBehaviour
         }
         
         // Resume game
-        Time.timeScale = 1;
+        if (Application.platform != RuntimePlatform.WebGLPlayer)
+        {
+            Time.timeScale = 1;
+        }
         
         // Log final confirmation
         Debug.Log("Quiz battle ended successfully");
@@ -855,6 +875,19 @@ public class QuizManager : MonoBehaviour
         else
         {
             Debug.LogWarning("QuizManager couldn't find a QuizUI in the scene during initialization. Make sure your QuizUI GameObject is active in the scene.");
+        }
+    }
+    
+    private IEnumerator DelayedHidePanel()
+    {
+        // Wait a short time before hiding the panel in web builds
+        yield return new WaitForSecondsRealtime(0.5f);
+        
+        GameObject quizPanel = quizUI.GetQuizPanel();
+        if (quizPanel != null && quizPanel.activeSelf)
+        {
+            Debug.Log("Hiding quiz panel in web build");
+            quizPanel.SetActive(false);
         }
     }
 } 

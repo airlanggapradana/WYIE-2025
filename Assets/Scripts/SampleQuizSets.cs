@@ -27,99 +27,100 @@ public class SampleQuizSets : MonoBehaviour
     private void CreateSampleQuizSets()
     {
         #if UNITY_EDITOR
-        // Create Math quiz set
-        QuizSet mathQuiz = ScriptableObject.CreateInstance<QuizSet>();
-        mathQuiz.quizTitle = "Math Quiz";
-        mathQuiz.quizDescription = "Test your math knowledge with these challenging questions.";
-        mathQuiz.questions = new QuizQuestion[]
+    
+        // Create History quiz set
+        QuizSet historyQuiz = ScriptableObject.CreateInstance<QuizSet>();
+        historyQuiz.quizTitle = "History Quiz";
+        historyQuiz.quizDescription = "Test your knowledge of history with these questions about Nusantara archipelago.";
+        historyQuiz.questions = new QuizQuestion[]
         {
             new QuizQuestion
             {
-                questionText = "What is 7 × 8?",
-                answerChoices = new string[] { "54", "56", "64", "72" },
-                correctAnswerIndex = 1,
+                questionText = "Which Europeans nation was the first who land in Nusantara archipelago?",
+                answerChoices = new string[] { "Dutch", "France", "British", "Portuguese" },
+                correctAnswerIndex = 3,
                 difficultyMultiplier = 1.0f,
-                explanationText = "7 × 8 = 56"
+                explanationText = "Portuguese were the first Europeans to land in Nusantara archipelago."
             },
             new QuizQuestion
             {
-                questionText = "What is the square root of 144?",
-                answerChoices = new string[] { "12", "14", "16", "18" },
+                questionText = "Who was the name of the Dutch sailor that first landed in Banten?",
+                answerChoices = new string[] { "Columbus", "Cornelis de houtman", "Ferdinand Magellan", "Monkey D Luffy" },
+                correctAnswerIndex = 1,
+                difficultyMultiplier = 1.0f,
+                explanationText = "Cornelis de Houtman was the Dutch sailor who first landed in Banten."
+            },
+            new QuizQuestion
+            {
+                questionText = "What year did the Dutch arrived in Banten?",
+                answerChoices = new string[] { "1596", "1911", "1569", "1659" },
                 correctAnswerIndex = 0,
+                difficultyMultiplier = 1.0f,
+                explanationText = "The Dutch arrived in Banten in 1596."
+            },
+            new QuizQuestion
+            {
+                questionText = "What is VOC stand for?",
+                answerChoices = new string[] { "Voice of corruption", "Vintage Old Company", "Vereenigde Oost-Indische Compagnie", "Valley of the Creek" },
+                correctAnswerIndex = 2,
                 difficultyMultiplier = 1.2f,
-                explanationText = "√144 = 12"
+                explanationText = "VOC stands for Vereenigde Oost-Indische Compagnie, which was the Dutch East India Company."
             },
             new QuizQuestion
             {
-                questionText = "If x + 5 = 12, what is x?",
-                answerChoices = new string[] { "5", "7", "8", "17" },
-                correctAnswerIndex = 1,
+                questionText = "One of the VOC purpose is?",
+                answerChoices = new string[] { "To Monopolized trade in Dutch-East Indies", "To make an Allies with another kingdom", "To conquer the market", "To control South East Asia" },
+                correctAnswerIndex = 0,
                 difficultyMultiplier = 1.0f,
-                explanationText = "x + 5 = 12, so x = 12 - 5 = 7"
+                explanationText = "One of the VOC's main purposes was to monopolize trade in the Dutch East Indies."
             }
         };
         
-        // Create Science quiz set
-        QuizSet scienceQuiz = ScriptableObject.CreateInstance<QuizSet>();
-        scienceQuiz.quizTitle = "Science Quiz";
-        scienceQuiz.quizDescription = "Test your science knowledge with these questions.";
-        scienceQuiz.questions = new QuizQuestion[]
+        // Create History quiz set 2
+        QuizSet historyQuiz2 = ScriptableObject.CreateInstance<QuizSet>();
+        historyQuiz2.quizTitle = "History Quiz 2";
+        historyQuiz2.quizDescription = "More questions about the history of Nusantara archipelago and colonialism.";
+        historyQuiz2.questions = new QuizQuestion[]
         {
             new QuizQuestion
             {
-                questionText = "What is the chemical symbol for gold?",
-                answerChoices = new string[] { "Go", "Gd", "Au", "Ag" },
-                correctAnswerIndex = 2,
-                difficultyMultiplier = 1.0f,
-                explanationText = "The chemical symbol for gold is Au (from Latin 'aurum')."
-            },
-            new QuizQuestion
-            {
-                questionText = "Which planet is known as the Red Planet?",
-                answerChoices = new string[] { "Venus", "Mars", "Jupiter", "Saturn" },
-                correctAnswerIndex = 1,
-                difficultyMultiplier = 0.8f,
-                explanationText = "Mars is known as the Red Planet due to its reddish appearance."
-            },
-            new QuizQuestion
-            {
-                questionText = "What is the hardest natural substance on Earth?",
-                answerChoices = new string[] { "Platinum", "Titanium", "Diamond", "Graphene" },
-                correctAnswerIndex = 2,
-                difficultyMultiplier = 1.5f,
-                explanationText = "Diamond is the hardest naturally occurring substance on Earth."
-            }
-        };
-        
-        // Create Gaming quiz set
-        QuizSet gamingQuiz = ScriptableObject.CreateInstance<QuizSet>();
-        gamingQuiz.quizTitle = "Gaming Quiz";
-        gamingQuiz.quizDescription = "Test your knowledge of video games with these questions.";
-        gamingQuiz.questions = new QuizQuestion[]
-        {
-            new QuizQuestion
-            {
-                questionText = "Which company created Mario?",
-                answerChoices = new string[] { "Sega", "Nintendo", "Sony", "Microsoft" },
-                correctAnswerIndex = 1,
-                difficultyMultiplier = 0.7f,
-                explanationText = "Mario was created by Nintendo."
-            },
-            new QuizQuestion
-            {
-                questionText = "In Minecraft, what material makes the strongest tools?",
-                answerChoices = new string[] { "Iron", "Gold", "Diamond", "Netherite" },
+                questionText = "Who was not included as a general governor of the VOC?",
+                answerChoices = new string[] { "J.P Coen", "Pieter Both", "Diederick Durven", "Rafless" },
                 correctAnswerIndex = 3,
                 difficultyMultiplier = 1.2f,
-                explanationText = "Netherite tools are the strongest in Minecraft, followed by Diamond."
+                explanationText = "Rafless (Thomas Stamford Raffles) was not a general governor of the VOC, but a British statesman who was Lieutenant-Governor of the Dutch East Indies during British rule."
             },
             new QuizQuestion
             {
-                questionText = "Which game series features a character named Master Chief?",
-                answerChoices = new string[] { "Call of Duty", "Halo", "Gears of War", "Destiny" },
+                questionText = "Before renamed to Jakarta, in the colonialism era, Jakarta named was?",
+                answerChoices = new string[] { "Kotawaringin", "Batavia", "Bavaria", "Siberia" },
                 correctAnswerIndex = 1,
                 difficultyMultiplier = 1.0f,
-                explanationText = "Master Chief is the protagonist of the Halo series."
+                explanationText = "Jakarta was named Batavia during the Dutch colonial period."
+            },
+            new QuizQuestion
+            {
+                questionText = "How many years the British take control the Dutch-East Indies?",
+                answerChoices = new string[] { "6 years", "5 years", "4 years", "3 years" },
+                correctAnswerIndex = 0,
+                difficultyMultiplier = 1.1f,
+                explanationText = "The British controlled the Dutch East Indies for 6 years (1811-1816)."
+            },
+            new QuizQuestion
+            {
+                questionText = "In 1511, Portuguese already conquer…?",
+                answerChoices = new string[] { "Maluku", "Malacca", "Borneo", "Java" },
+                correctAnswerIndex = 1,
+                difficultyMultiplier = 1.0f,
+                explanationText = "In 1511, Portuguese conquered Malacca. This first expedition brought them to the Malacca peninsula, and then they continued to Maluku."
+            },
+            new QuizQuestion
+            {
+                questionText = "What is 3G stand for?",
+                answerChoices = new string[] { "Gold, Glory, Gospel", "Glow, Glass, Gas", "Grass, Gold, Growth", "Guinevere, Gospel, Gant" },
+                correctAnswerIndex = 0,
+                difficultyMultiplier = 1.0f,
+                explanationText = "3G stands for Gold, Glory, and Gospel, which were the three main motives of European exploration and colonization."
             }
         };
         
@@ -130,9 +131,9 @@ public class SampleQuizSets : MonoBehaviour
         }
         
         // Save the quiz sets as assets
-        AssetDatabase.CreateAsset(mathQuiz, $"{folderPath}/MathQuiz.asset");
-        AssetDatabase.CreateAsset(scienceQuiz, $"{folderPath}/ScienceQuiz.asset");
-        AssetDatabase.CreateAsset(gamingQuiz, $"{folderPath}/GamingQuiz.asset");
+ 
+        AssetDatabase.CreateAsset(historyQuiz, $"{folderPath}/HistoryQuiz.asset");
+        AssetDatabase.CreateAsset(historyQuiz2, $"{folderPath}/HistoryQuiz2.asset");
         
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();

@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: HistoryQuiz
+  m_EditorClassIdentifier: Assembly-CSharp::QuizSet
+  quizTitle: History Quiz
+  quizDescription: Test your knowledge of history with these questions about Nusantara
+    archipelago.
+  questions:
+  - questionText: Which Europeans nation was the first who land in Nusantara archipelago?
+    answerChoices:
+    - Dutch
+    - France
+    - British
+    - Portuguese
+    correctAnswerIndex: 3
+    difficultyMultiplier: 1
+    nextQuestionIndex: -1
+    explanationText: Portuguese were the first Europeans to land in Nusantara archipelago.
+  - questionText: Who was the name of the Dutch sailor that first landed in Banten?
+    answerChoices:
+    - Columbus
+    - Cornelis de houtman
+    - Ferdinand Magellan
+    - Monkey D Luffy
+    correctAnswerIndex: 1
+    difficultyMultiplier: 1
+    nextQuestionIndex: -1
+    explanationText: Cornelis de Houtman was the Dutch sailor who first landed in
+      Banten.
+  - questionText: What year did the Dutch arrived in Banten?
+    answerChoices:
+    - 1596
+    - 1911
+    - 1569
+    - 1659
+    correctAnswerIndex: 0
+    difficultyMultiplier: 1
+    nextQuestionIndex: -1
+    explanationText: The Dutch arrived in Banten in 1596.
+  - questionText: What is VOC stand for?
+    answerChoices:
+    - Voice of corruption
+    - Vintage Old Company
+    - Vereenigde Oost-Indische Compagnie
+    - Valley of the Creek
+    correctAnswerIndex: 2
+    difficultyMultiplier: 1.2
+    nextQuestionIndex: -1
+    explanationText: VOC stands for Vereenigde Oost-Indische Compagnie, which was
+      the Dutch East India Company.
+  - questionText: One of the VOC purpose is?
+    answerChoices:
+    - To Monopolized trade in Dutch-East Indies
+    - To make an Allies with another kingdom
+    - To conquer the market
+    - To control South East Asia
+    correctAnswerIndex: 0
+    difficultyMultiplier: 1
+    nextQuestionIndex: -1
+    explanationText: One of the VOC's main purposes was to monopolize trade in the
+      Dutch East Indies.
+  startQuestionIndex: 0

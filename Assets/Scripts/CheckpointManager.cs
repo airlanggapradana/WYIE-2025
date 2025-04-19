@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class CheckpointManager : MonoBehaviour
 {
@@ -37,8 +38,7 @@ public class CheckpointManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
-
+       
         // Initialize respawn position
         respawnPosition = defaultSpawnPoint;
 
@@ -51,6 +51,22 @@ public class CheckpointManager : MonoBehaviour
     {
         // Find all checkpoints in the scene
         FindAllCheckpoints();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        FindAllCheckpoints();
+        Debug.Log($"Scene loaded: {scene.name} - Finding checkpoints");
     }
 
     /// <summary>
