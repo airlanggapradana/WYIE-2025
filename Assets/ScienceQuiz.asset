@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: ScienceQuiz
+  m_EditorClassIdentifier: Assembly-CSharp::QuizSet
+  quizTitle: Science Quiz
+  quizDescription: Test your science knowledge with these questions.
+  questions:
+  - questionText: What is the chemical symbol for gold?
+    answerChoices:
+    - Go
+    - Gd
+    - Au
+    - Ag
+    correctAnswerIndex: 2
+    difficultyMultiplier: 1
+    nextQuestionIndex: -1
+    explanationText: The chemical symbol for gold is Au (from Latin 'aurum').
+  - questionText: Which planet is known as the Red Planet?
+    answerChoices:
+    - Venus
+    - Mars
+    - Jupiter
+    - Saturn
+    correctAnswerIndex: 1
+    difficultyMultiplier: 0.8
+    nextQuestionIndex: -1
+    explanationText: Mars is known as the Red Planet due to its reddish appearance.
+  - questionText: What is the hardest natural substance on Earth?
+    answerChoices:
+    - Platinum
+    - Titanium
+    - Diamond
+    - Graphene
+    correctAnswerIndex: 2
+    difficultyMultiplier: 1.5
+    nextQuestionIndex: -1
+    explanationText: Diamond is the hardest naturally occurring substance on Earth.
+  startQuestionIndex: 0

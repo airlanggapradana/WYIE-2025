@@ -300,13 +300,13 @@ public class PlayerCombat : MonoBehaviour
     /// </summary>
     private void OnGUI()
     {
-        if (healthSystem == null) return;
+        // if (healthSystem == null) return;
 
-        // Create a basic HUD
-        GUI.Box(new Rect(10, 10, 200, 25), "Health: " + Mathf.RoundToInt(healthSystem.GetCurrentHealth()) +
-                                            " / " + Mathf.RoundToInt(healthSystem.GetMaxHealth()));
+        // // Create a basic HUD
+        // GUI.Box(new Rect(10, 10, 200, 25), "Health: " + Mathf.RoundToInt(healthSystem.GetCurrentHealth()) +
+        //                                     " / " + Mathf.RoundToInt(healthSystem.GetMaxHealth()));
 
-        GUI.Box(new Rect(10, 40, 200, 25), "Health Items: " + currentHealthItems +
-                                            " (Press " + useHealthItemKey.ToString() + " to use)");
+        // GUI.Box(new Rect(10, 40, 200, 25), "Health Items: " + currentHealthItems +
+        //                                     " (Press " + useHealthItemKey.ToString() + " to use)");
     }
 }

@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: GamingQuiz
+  m_EditorClassIdentifier: Assembly-CSharp::QuizSet
+  quizTitle: Gaming Quiz
+  quizDescription: Test your knowledge of video games with these questions.
+  questions:
+  - questionText: Which company created Mario?
+    answerChoices:
+    - Sega
+    - Nintendo
+    - Sony
+    - Microsoft
+    correctAnswerIndex: 1
+    difficultyMultiplier: 0.7
+    nextQuestionIndex: -1
+    explanationText: Mario was created by Nintendo.
+  - questionText: In Minecraft, what material makes the strongest tools?
+    answerChoices:
+    - Iron
+    - Gold
+    - Diamond
+    - Netherite
+    correctAnswerIndex: 3
+    difficultyMultiplier: 1.2
+    nextQuestionIndex: -1
+    explanationText: Netherite tools are the strongest in Minecraft, followed by
+      Diamond.
+  - questionText: Which game series features a character named Master Chief?
+    answerChoices:
+    - Call of Duty
+    - Halo
+    - Gears of War
+    - Destiny
+    correctAnswerIndex: 1
+    difficultyMultiplier: 1
+    nextQuestionIndex: -1
+    explanationText: Master Chief is the protagonist of the Halo series.
+  startQuestionIndex: 0
