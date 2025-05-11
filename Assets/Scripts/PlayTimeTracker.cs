@@ -1,23 +1,36 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System;
 
 public class PlayTimeTracker : MonoBehaviour
 {
     public static PlayTimeTracker Instance { get; private set; }
 
+    [Header("UI References")]
     [SerializeField] private GameObject warningDialog;
     [SerializeField] private Text warningText;
-    [SerializeField] private GameObject cooldownDialog;
-    [SerializeField] private Text cooldownText;
+    [SerializeField] private GameObject energyCooldownDialog;
+    [SerializeField] private Text energyCooldownText;
+    [SerializeField] private Text energyText;
+    [SerializeField] private Slider energySlider;
+
+    [Header("Energy Settings")]
+    [SerializeField] private int maxEnergy = 100;
+    [SerializeField] private int energyDecreasePerLevel = 3;
+    [SerializeField] private float energyRecoveryInterval = 180f; // 3 minutes
+    [SerializeField] private int energyRecoveryAmount = 10;
+    [SerializeField] private float energyCooldownTime = 300f; // 5 minutes
 
     private float playTimeInSeconds = 0f;
-    private float cooldownTimeRemaining = 0f;
-    private bool isInCooldown = false;
+    private float energyRecoveryTimer = 0f;
+    private float energyCooldownTimer = 0f;
+    private int currentEnergy;
+    private bool isInEnergyCooldown = false;
     private bool isPaused = false;
-    private const float MAX_PLAY_TIME = 10f; // 1 hour in seconds
-    private const float COOLDOWN_TIME = 60f; // 5 minutes in seconds
-    private DateTime cooldownEndTime;
+    private const float MAX_PLAY_TIME = 3600f; // 1 hour in seconds
+    private string previousSceneName;
+    private DateTime energyCooldownEndTime;
 
     private void Awake()
     {
@@ -25,6 +38,7 @@ public class PlayTimeTracker : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -35,111 +49,176 @@ public class PlayTimeTracker : MonoBehaviour
     private void Start()
     {
         warningDialog.SetActive(false);
-        cooldownDialog.SetActive(false);
-        LoadPlayTime();
-        CheckCooldown();
+        energyCooldownDialog.SetActive(false);
+        LoadPlayerData();
+        CheckEnergyCooldown();
+        UpdateEnergyUI();
     }
 
     private void Update()
     {
-        if (isInCooldown)
+        if (isInEnergyCooldown)
         {
-            UpdateCooldown();
+            UpdateEnergyCooldown();
         }
         else if (!isPaused)
         {
+            // Update play time tracking
             playTimeInSeconds += Time.unscaledDeltaTime;
 
             if (playTimeInSeconds >= MAX_PLAY_TIME)
             {
-                StartCooldown();
+                ShowPlaytimeWarning();
+            }
+
+            // Update energy recovery system
+            if (currentEnergy < maxEnergy)
+            {
+                energyRecoveryTimer += Time.unscaledDeltaTime;
+
+                if (energyRecoveryTimer >= energyRecoveryInterval)
+                {
+                    RecoverEnergy();
+                    energyRecoveryTimer = 0f;
+                }
+            }
+            else
+            {
+                energyRecoveryTimer = 0f;
             }
         }
     }
 
-    private void StartCooldown()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        isPaused = true;
-        isInCooldown = true;
-        Time.timeScale = 0f; // Pause the game
-        cooldownTimeRemaining = COOLDOWN_TIME;
-        cooldownEndTime = DateTime.Now.AddSeconds(COOLDOWN_TIME);
-        warningDialog.SetActive(false);
-        cooldownDialog.SetActive(true);
-        UpdateCooldownDisplay();
-        SaveCooldownTime();
+        if (!string.IsNullOrEmpty(previousSceneName) && previousSceneName != scene.name)
+        {
+            // Player entered a new level
+            ConsumeEnergy();
+        }
+        previousSceneName = scene.name;
     }
 
-    private void UpdateCooldown()
+    private void ConsumeEnergy()
     {
-        cooldownTimeRemaining = (float)(cooldownEndTime - DateTime.Now).TotalSeconds;
+        if (isInEnergyCooldown) return;
 
-        if (cooldownTimeRemaining <= 0)
+        currentEnergy = Mathf.Max(0, currentEnergy - energyDecreasePerLevel);
+        UpdateEnergyUI();
+
+        if (currentEnergy <= 0)
         {
-            EndCooldown();
+            StartEnergyCooldown();
+        }
+
+        SavePlayerData();
+    }
+
+    private void RecoverEnergy()
+    {
+        currentEnergy = Mathf.Min(maxEnergy, currentEnergy + energyRecoveryAmount);
+        UpdateEnergyUI();
+        SavePlayerData();
+    }
+
+    private void UpdateEnergyUI()
+    {
+        if (energyText != null)
+        {
+            energyText.text = $"Energy: {currentEnergy}/{maxEnergy}";
+        }
+        if (energySlider != null)
+        {
+            energySlider.maxValue = maxEnergy;
+            energySlider.value = currentEnergy;
+        }
+    }
+
+    private void ShowPlaytimeWarning()
+    {
+        isPaused = true;
+        Time.timeScale = 0f;
+        warningDialog.SetActive(true);
+        warningText.text = "Kamu telah bermain terlalu lama, pertimbangkan untuk beristirahat sebentar";
+    }
+
+    public void OnContinueClicked()
+    {
+        isPaused = false;
+        playTimeInSeconds = 0f;
+        Time.timeScale = 1f;
+        warningDialog.SetActive(false);
+        SavePlayerData();
+    }
+
+    private void StartEnergyCooldown()
+    {
+        isPaused = true;
+        isInEnergyCooldown = true;
+        Time.timeScale = 0f;
+        energyCooldownTimer = energyCooldownTime;
+        energyCooldownEndTime = DateTime.Now.AddSeconds(energyCooldownTime);
+        energyCooldownDialog.SetActive(true);
+        UpdateEnergyCooldownDisplay();
+        SavePlayerData();
+    }
+
+    private void UpdateEnergyCooldown()
+    {
+        energyCooldownTimer = (float)(energyCooldownEndTime - DateTime.Now).TotalSeconds;
+
+        if (energyCooldownTimer <= 0)
+        {
+            EndEnergyCooldown();
         }
         else
         {
-            UpdateCooldownDisplay();
+            UpdateEnergyCooldownDisplay();
         }
     }
 
-    private void UpdateCooldownDisplay()
+    private void UpdateEnergyCooldownDisplay()
     {
-        TimeSpan timeSpan = TimeSpan.FromSeconds(cooldownTimeRemaining);
-        cooldownText.text = string.Format("Istirahat dulu ya ganteng! Kamu bisa main lagi kok dalam {0:D2}:{1:D2}",
-                                        timeSpan.Minutes,
-                                        timeSpan.Seconds);
+        TimeSpan timeSpan = TimeSpan.FromSeconds(energyCooldownTimer);
+        energyCooldownText.text = $"Energi kamu udah abis! recovering dalam {timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}";
     }
 
-    private void EndCooldown()
+    private void EndEnergyCooldown()
     {
-        isInCooldown = false;
+        isInEnergyCooldown = false;
         isPaused = false;
-        playTimeInSeconds = 0f;
-        Time.timeScale = 1f; // Unpause the game
-        cooldownDialog.SetActive(false);
-        PlayerPrefs.DeleteKey("CooldownEndTime");
-        PlayerPrefs.Save();
+        currentEnergy = maxEnergy;
+        Time.timeScale = 1f;
+        energyCooldownDialog.SetActive(false);
+        UpdateEnergyUI();
+        SavePlayerData();
     }
 
-    private void CheckCooldown()
+    private void CheckEnergyCooldown()
     {
-        string cooldownString = PlayerPrefs.GetString("CooldownEndTime", "");
+        string cooldownString = PlayerPrefs.GetString("EnergyCooldownEndTime", "");
 
         if (!string.IsNullOrEmpty(cooldownString))
         {
-            if (DateTime.TryParse(cooldownString, out cooldownEndTime))
+            if (DateTime.TryParse(cooldownString, out energyCooldownEndTime))
             {
-                cooldownTimeRemaining = (float)(cooldownEndTime - DateTime.Now).TotalSeconds;
+                energyCooldownTimer = (float)(energyCooldownEndTime - DateTime.Now).TotalSeconds;
 
-                if (cooldownTimeRemaining > 0)
+                if (energyCooldownTimer > 0)
                 {
-                    StartCooldown();
+                    StartEnergyCooldown();
                 }
                 else
                 {
-                    PlayerPrefs.DeleteKey("CooldownEndTime");
+                    PlayerPrefs.DeleteKey("EnergyCooldownEndTime");
                 }
             }
         }
     }
 
-    private void SaveCooldownTime()
+    private void LoadPlayerData()
     {
-        PlayerPrefs.SetString("CooldownEndTime", cooldownEndTime.ToString());
-        PlayerPrefs.Save();
-    }
-
-    private void SavePlayTime()
-    {
-        PlayerPrefs.SetFloat("LastPlayTime", Time.time);
-        PlayerPrefs.SetFloat("AccumulatedPlayTime", playTimeInSeconds);
-        PlayerPrefs.Save();
-    }
-
-    private void LoadPlayTime()
-    {
+        // Load play time
         float lastPlayTime = PlayerPrefs.GetFloat("LastPlayTime", 0f);
         float accumulatedTime = PlayerPrefs.GetFloat("AccumulatedPlayTime", 0f);
 
@@ -151,20 +230,48 @@ public class PlayTimeTracker : MonoBehaviour
         {
             playTimeInSeconds = 0f;
         }
+
+        // Load energy
+        currentEnergy = PlayerPrefs.GetInt("PlayerEnergy", maxEnergy);
+        energyRecoveryTimer = PlayerPrefs.GetFloat("EnergyRecoveryTimer", 0f);
+
+        // Load energy cooldown
+        CheckEnergyCooldown();
+    }
+
+    private void SavePlayerData()
+    {
+        PlayerPrefs.SetFloat("LastPlayTime", Time.time);
+        PlayerPrefs.SetFloat("AccumulatedPlayTime", playTimeInSeconds);
+        PlayerPrefs.SetInt("PlayerEnergy", currentEnergy);
+        PlayerPrefs.SetFloat("EnergyRecoveryTimer", energyRecoveryTimer);
+
+        if (isInEnergyCooldown)
+        {
+            PlayerPrefs.SetString("EnergyCooldownEndTime", energyCooldownEndTime.ToString());
+        }
+        else
+        {
+            PlayerPrefs.DeleteKey("EnergyCooldownEndTime");
+        }
+
+        PlayerPrefs.Save();
     }
 
     private void OnApplicationQuit()
     {
-        if (!isInCooldown)
-        {
-            SavePlayTime();
-        }
+        SavePlayerData();
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     // For testing purposes
-    public void ForceCooldownForTesting()
+    public void ForceEnergyDepletion()
     {
-        playTimeInSeconds = MAX_PLAY_TIME;
-        StartCooldown();
+        currentEnergy = 0;
+        StartEnergyCooldown();
     }
 }
